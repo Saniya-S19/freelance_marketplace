@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | NexWork</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ===== LOGIN PAGE BACKGROUND ===== */
+.login-body {
+    background: linear-gradient(135deg, #eef2ff, #f8f9fa);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== WRAPPER ===== */
+.login-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* ===== LOGIN CARD ===== */
+.login-card {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 380px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ===== TITLE ===== */
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.brand {
+    color: #4f46e5;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* ===== INPUTS ===== */
+.login-card label {
+    float: left;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.login-card input {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+.login-card input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 5px rgba(79,70,229,0.3);
+}
+
+/* ===== LOGIN BUTTON ===== */
+.login-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(79,70,229,0.3);
+}
+
+/* ===== BOTTOM TEXT ===== */
+.bottom-text {
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.bottom-text a {
+    color: #4f46e5;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.bottom-text a:hover {
+    text-decoration: underline;
+}
+    </style>
+
+
+</head>
+
+<body class="login-body">
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <h2 class="title">
+            Welcome to <span class="brand">NexWork</span>
+        </h2>
+
+        <p class="subtitle">Login to continue your journey</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="btn login-btn">Login</button>
+
+        </form>
+
+        <p class="bottom-text">
+            Don’t have an account?
+            <a href="{% url 'signup' %}">Sign up</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

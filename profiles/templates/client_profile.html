@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Profile</title>
+</head>
+<body>
+
+    <h1>Client Profile</h1>
+
+    <hr>
+
+    {% if profile %}
+
+        {% if profile.logo %}
+            <img src="{{ profile.logo.url }}" alt="Company Logo" width="150">
+        {% else %}
+            <p>No company logo uploaded.</p>
+        {% endif %}
+
+        <h2>{{ profile.company_name }}</h2>
+
+        <p>
+            <strong>Company Description:</strong>
+        </p>
+
+        <p>{{ profile.company_desc }}</p>
+
+        <p>
+            <strong>Website:</strong>
+
+            {% if profile.website %}
+                <a href="{{ profile.website }}" target="_blank">
+                    {{ profile.website }}
+                </a>
+            {% else %}
+                Not Added
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            {{ profile.location }}
+        </p>
+
+        <br>
+
+        <a href="{% url 'edit_profile' %}">
+            Edit Profile
+        </a>
+
+    {% else %}
+
+        <h2>No Client Profile Found</h2>
+
+        <p>Please create your company profile first.</p>
+
+        <a href="{% url 'edit_profile' %}">
+            Create Profile
+        </a>
+
+    {% endif %}
+
+</body>
+</html>

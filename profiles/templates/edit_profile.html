@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Company Profile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:40px;
+}
+
+.container{
+    width:700px;
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:40px;
+    color:white;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:500;
+}
+
+.form-control{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#1e293b;
+    color:white;
+    outline:none;
+}
+
+textarea{
+    resize:none;
+}
+
+input[type=file]{
+    color:white;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    background:#6366f1;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#4f46e5;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#a5b4fc;
+    text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Edit Company Profile</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="form-group">
+<label>Company Name</label>
+{{ form.company_name }}
+</div>
+
+<div class="form-group">
+<label>Company Logo</label>
+{{ form.logo }}
+</div>
+
+<div class="form-group">
+<label>Company Description</label>
+{{ form.company_desc }}
+</div>
+
+<div class="form-group">
+<label>Website</label>
+{{ form.website }}
+</div>
+
+<div class="form-group">
+<label>Location</label>
+{{ form.location }}
+</div>
+
+<button class="btn" type="submit">
+Save Profile
+</button>
+
+</form>
+
+<a href="{% url 'client_profile' %}" class="back">
+← Back to Profile
+</a>
+
+</div>
+
+</body>
+</html>

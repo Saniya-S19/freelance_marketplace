@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Profile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:"Poppins",sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:40px;
+        }
+
+        .profile-card{
+            width:700px;
+            background:rgba(255,255,255,.05);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,.08);
+            border-radius:20px;
+            padding:40px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:30px;
+            color:#818cf8;
+        }
+
+        .image{
+            text-align:center;
+            margin-bottom:25px;
+        }
+
+        .image img{
+            width:160px;
+            height:160px;
+            object-fit:cover;
+            border-radius:50%;
+            border:4px solid #6366f1;
+        }
+
+        .info{
+            margin-bottom:18px;
+        }
+
+        .info strong{
+            color:#a5b4fc;
+        }
+
+        a{
+            color:#818cf8;
+            text-decoration:none;
+        }
+
+        .buttons{
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            margin-top:30px;
+        }
+
+        .btn{
+            background:#6366f1;
+            color:white;
+            padding:12px 25px;
+            border-radius:10px;
+            text-decoration:none;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            background:#4f46e5;
+        }
+
+        .empty{
+            text-align:center;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="profile-card">
+
+{% if profile %}
+
+    <h1>Freelancer Profile</h1>
+
+    <div class="image">
+
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+        {% else %}
+            <img src="https://via.placeholder.com/160" alt="Profile Picture">
+        {% endif %}
+
+    </div>
+
+    <div class="info">
+        <strong>Username:</strong>
+        {{ profile.user.username }}
+    </div>
+
+    <div class="info">
+        <strong>Bio:</strong><br>
+        {{ profile.bio }}
+    </div>
+
+    <div class="info">
+        <strong>Skills:</strong><br>
+        {{ profile.skills }}
+    </div>
+
+    <div class="info">
+        <strong>Experience:</strong>
+        {{ profile.experience }} Years
+    </div>
+
+    <div class="info">
+        <strong>Education:</strong>
+        {{ profile.education }}
+    </div>
+
+    <div class="info">
+        <strong>Hourly Rate:</strong>
+        ₹{{ profile.hourly_rate }}/hour
+    </div>
+
+    <div class="info">
+        <strong>Resume:</strong>
+
+        {% if profile.resume_upload %}
+            <a href="{{ profile.resume_upload.url }}" target="_blank">
+                View Resume
+            </a>
+        {% else %}
+            Resume Not Uploaded
+        {% endif %}
+    </div>
+
+    <div class="buttons">
+
+        <a href="{% url 'edit_freelancer_profile' %}" class="btn">
+            Edit Profile
+        </a>
+
+        <a href="{% url 'freelancer_dashboard' %}" class="btn">
+            Dashboard
+        </a>
+
+    </div>
+
+{% else %}
+
+    <div class="empty">
+
+        <h1>No Profile Found</h1>
+
+        <p>Please create your freelancer profile.</p>
+
+        <br>
+
+        <a href="{% url 'edit_freelancer_profile' %}" class="btn">
+            Create Profile
+        </a>
+
+    </div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
