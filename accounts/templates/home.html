@@ -1,1883 +1,283 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freelance Marketplace</title>
+    <title>PitchPod | Premium Freelance Pods</title>
+    <style>
+        /* Burgundy and Cream Color Palette */
+        :root {
+            --bg-cream: #FAF7F0; 
+            --bg-cream-alt: #F2EFE8; 
+            --brand-burgundy: #721C24; 
+            --brand-burgundy-hover: #5A161C;
+            --text-dark: #331A1C; 
+            --text-cream: #FAF7F0;
+            --golden-warmth: rgba(212, 175, 55, 0.15);
+        }
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
 
-    <link rel="stylesheet" href="{% static 'style.css' %}?v=1">
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(114, 28, 36, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--brand-burgundy);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links .login-btn:hover {
+            color: var(--brand-burgundy);
+        }
+
+        .login-btn {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* --- Primary Button Updates --- */
+        .btn-primary {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream) !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none; /* Removes the underline */
+            border: 2px solid var(--brand-burgundy); /* Keeps layout stable on hover */
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--bg-cream); /* Turns cream */
+            color: var(--brand-burgundy) !important; /* Text turns burgundy */
+            transform: translateY(-2px);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 10rem 5% 7rem;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            animation: slowPan 25s infinite alternate linear;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(
+                135deg, 
+                rgba(250, 247, 240, 0.92) 0%, 
+                rgba(250, 247, 240, 0.75) 50%, 
+                rgba(114, 28, 36, 0.15) 100%
+            );
+            box-shadow: inset 0 0 100px var(--golden-warmth);
+        }
+
+        @keyframes slowPan {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            color: var(--brand-burgundy);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 1px 1px 2px rgba(250, 247, 240, 0.8);
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            color: #4A3335;
+            font-weight: 500;
+            z-index: 1;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .btn-outline {
+            background-color: rgba(250, 247, 240, 0.8);
+            color: var(--brand-burgundy);
+            border: 2px solid var(--brand-burgundy);
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+        }
+
+        /* --- Explore Categories --- */
+        .categories {
+            padding: 5rem 5%;
+            background-color: var(--bg-cream);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--brand-burgundy);
+            font-size: 2.2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--bg-cream-alt);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(114, 28, 36, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(114, 28, 36, 0.1);
+            border-color: rgba(114, 28, 36, 0.3);
+        }
+
+        .card h3 {
+            color: var(--brand-burgundy);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .card p {
+            color: #554445;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- ================= NAVBAR ================= -->
-
-<nav class="navbar navbar-expand-lg custom-navbar fixed-top">
-
-    <div class="container">
-
-        <a class="navbar-brand logo" href="#">
-            <span class="nex">Nex</span><span class="work">Work</span>
-        </a>
-
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-
-            <ul class="navbar-nav ms-auto align-items-lg-center">
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#categories">Categories</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-
-                <li class="nav-item ms-lg-3">
-
-                    <a class="btn btn-login"
-                       href="{% url 'login' %}">
-
-                        Login
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item ms-lg-2">
-
-                    <a class="btn btn-signup"
-                       href="{% url 'signup' %}">
-
-                        Sign Up
-
-                    </a>
-
-                </li>
-
-            </ul>
-
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#" class="logo">PitchPod</a>
+        <div class="nav-links">
+            <a href="#categories">Explore Categories</a>
+            <a href="#hire">Hire Talents</a>
+            <a href="#jobs">Find Jobs</a>
+            <a href="/login" class="login-btn">Login</a>
+            <a href="/register" class="btn-primary">Get Started</a>
         </div>
+    </nav>
 
-    </div>
-
-</nav>
-
-<!-- ================= HERO ================= -->
-
-<section class="hero" id="hero">
-
-<div class="container">
-
-<div class="row align-items-center gy-5">
-
-<!-- LEFT -->
-
-<div class="col-lg-6">
-
-<div class="hero-badge">
-
-🚀 AI Powered Freelance Marketplace
-
-</div>
-
-<h1 class="hero-title">
-
-Find the Perfect
-
-<span>Freelancer</span>
-
-for Every Project
-
-</h1>
-
-<p class="hero-text">
-
-Hire verified professionals or discover your
-next freelance opportunity with NexWork.
-
-AI-powered matching helps clients and freelancers
-connect faster than ever.
-
-</p>
-
-<div class="hero-buttons">
-
-<a href="#"
-class="btn btn-primary btn-lg">
-
-Find Jobs
-
-</a>
-
-<a href="{% url 'find_freelancers' %}"
-class="btn btn-outline-primary btn-lg">
-
-Hire Talent
-
-</a>
-
-</div>
-
-
-</div>
-
-<!-- RIGHT -->
-
-<div class="col-lg-6">
-
-<div class="hero-right">
-
-<img src="{% static 'images/hero.jpg' %}"
-
-class="img-fluid hero-image"
-
-alt="Hero Image">
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- Wave -->
-
-<div class="hero-wave">
-
-<svg xmlns="http://www.w3.org/2000/svg"
-viewBox="0 0 1440 320">
-
-<path fill="#ffffff"
-fill-opacity="1"
-
-d="M0,224L60,208C120,192,240,160,360,165.3C480,171,600,213,720,224C840,235,960,213,1080,176C1200,139,1320,85,1380,58.7L1440,32L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
-
-</path>
-
-</svg>
-
-</div>
-
-</section>
-
-<!-- =========================================
-     CATEGORIES
-========================================= -->
-
-<section class="categories py-5" id="categories">
-
-    <div class="container">
-
-        <div class="text-center mb-5">
-
-            <span class="section-tag">Browse Categories</span>
-
-            <h2 class="section-title mt-3">Popular Services You Can Hire</h2>
-
-            <p class="section-subtitle">Explore trusted talent across the most in-demand freelance categories.</p>
-
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        
+        <h1>Deploy Elite Talent. Instantly.</h1>
+        <p>Hire pre-assembled squads of expert freelancers or work solo. Pitch your project directly to verified professionals who deliver.</p>
+        
+        <div class="hero-buttons">
+            <a href="#hire" class="btn-primary">Hire Talents</a>
+            <a href="#jobs" class="btn-outline">Find Jobs</a>
         </div>
+    </section>
 
-        <div class="row g-4">
-
-            <div class="col-lg-4 col-md-6">
-                <div class="category-card">
-                    <div class="category-icon">💻</div>
-                    <h4>Web Development</h4>
-                    <p>Build modern websites, dashboards, and web apps with expert developers.</p>
-                    <a href="#" class="category-link">Explore →</a>
-                </div>
+    <!-- Explore Categories Section -->
+    <section id="categories" class="categories">
+        <h2 class="section-header">Explore Categories</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>UI/UX Design</h3>
+                <p>Wireframes, prototypes, and high-fidelity interfaces crafted for conversion.</p>
             </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="category-card">
-                    <div class="category-icon">📱</div>
-                    <h4>Mobile App Development</h4>
-                    <p>Create polished iOS and Android apps for startups and growing businesses.</p>
-                    <a href="#" class="category-link">Explore →</a>
-                </div>
+            <div class="card">
+                <h3>Full-Stack Development</h3>
+                <p>Robust application architectures, seamless APIs, and responsive frontends.</p>
             </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="category-card">
-                    <div class="category-icon">🎨</div>
-                    <h4>UI/UX Design</h4>
-                    <p>Design intuitive interfaces, user flows, and standout brand experiences.</p>
-                    <a href="#" class="category-link">Explore →</a>
-                </div>
+            <div class="card">
+                <h3>AI & Machine Learning</h3>
+                <p>LLM integrations, intelligent agents, and custom predictive models.</p>
             </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="category-card">
-                    <div class="category-icon">🤖</div>
-                    <h4>AI & Automation</h4>
-                    <p>Implement chatbots, machine learning, and workflow automation solutions.</p>
-                    <a href="#" class="category-link">Explore →</a>
-                </div>
+            <div class="card">
+                <h3>Project Management</h3>
+                <p>Agile pod captains ensuring milestones are delivered flawlessly and on time.</p>
             </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="category-card">
-                    <div class="category-icon">✍️</div>
-                    <h4>Content Writing</h4>
-                    <p>Get high-quality blog posts, ad copy, product descriptions, and more.</p>
-                    <a href="#" class="category-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="category-card">
-                    <div class="category-icon">📊</div>
-                    <h4>Marketing & Growth</h4>
-                    <p>Grow your audience with SEO, paid ads, social media, and strategy experts.</p>
-                    <a href="#" class="category-link">Explore →</a>
-                </div>
-            </div>
-
         </div>
-
-    </div>
-
-</section>
-
-<!-- =========================================
-     TRUSTED BY
-========================================= -->
-
-<section class="trusted-section py-5">
-
-    <div class="container">
-
-        <div class="text-center mb-5">
-
-            <span class="section-tag">
-                Trusted Worldwide
-            </span>
-
-            <h2 class="section-title mt-3">
-                Trusted by Growing Businesses
-            </h2>
-
-            <p class="section-subtitle">
-                Thousands of startups and companies hire talented freelancers through NexWork.
-            </p>
-
-        </div>
-
-        <div class="row text-center g-4">
-
-            <div class="col-md-2 col-6">
-                <div class="company-card">
-                    <h4>Google</h4>
-                </div>
-            </div>
-
-            <div class="col-md-2 col-6">
-                <div class="company-card">
-                    <h4>Microsoft</h4>
-                </div>
-            </div>
-
-            <div class="col-md-2 col-6">
-                <div class="company-card">
-                    <h4>Amazon</h4>
-                </div>
-            </div>
-
-            <div class="col-md-2 col-6">
-                <div class="company-card">
-                    <h4>Adobe</h4>
-                </div>
-            </div>
-
-            <div class="col-md-2 col-6">
-                <div class="company-card">
-                    <h4>Netflix</h4>
-                </div>
-            </div>
-
-            <div class="col-md-2 col-6">
-                <div class="company-card">
-                    <h4>Spotify</h4>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     POPULAR CATEGORIES
-========================================= -->
-
-<section class="categories py-5">
-
-<div class="container">
-
-<div class="text-center mb-5">
-
-<span class="section-tag">
-
-Explore Categories
-
-</span>
-
-<h2 class="section-title mt-3">
-
-Popular Freelancing Categories
-
-</h2>
-
-<p class="section-subtitle">
-
-Find skilled professionals from different domains.
-
-</p>
-
-</div>
-
-<div class="row g-4">
-
-<div class="col-lg-3 col-md-6">
-
-<div class="category-card">
-
-<div class="category-icon">
-
-💻
-
-</div>
-
-<h4>
-
-Web Development
-
-</h4>
-
-<p>
-
-Build websites using Django, React,
-Laravel and more.
-
-</p>
-
-<a href="#" class="category-link">
-
-Explore →
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-lg-3 col-md-6">
-
-<div class="category-card">
-
-<div class="category-icon">
-
-📱
-
-</div>
-
-<h4>
-
-App Development
-
-</h4>
-
-<p>
-
-Flutter, Android, iOS and hybrid
-application development.
-
-</p>
-
-<a href="#" class="category-link">
-
-Explore →
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-lg-3 col-md-6">
-
-<div class="category-card">
-
-<div class="category-icon">
-
-🤖
-
-</div>
-
-<h4>
-
-AI & Machine Learning
-
-</h4>
-
-<p>
-
-Deep Learning, NLP,
-Computer Vision,
-Generative AI.
-
-</p>
-
-<a href="#" class="category-link">
-
-Explore →
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-lg-3 col-md-6">
-
-<div class="category-card">
-
-<div class="category-icon">
-
-🎨
-
-</div>
-
-<h4>
-
-UI / UX Design
-
-</h4>
-
-<p>
-
-Creative interfaces,
-wireframes,
-prototypes
-and branding.
-
-</p>
-
-<a href="#" class="category-link">
-
-Explore →
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================
-     HOW IT WORKS
-========================================= -->
-
-<section class="how-section py-5">
-
-<div class="container">
-
-<div class="text-center mb-5">
-
-<span class="section-tag">
-
-How It Works
-
-</span>
-
-<h2 class="section-title mt-3">
-
-Start in 4 Simple Steps
-
-</h2>
-
-</div>
-
-<div class="row g-4">
-
-<div class="col-lg-3">
-
-<div class="step-card">
-
-<div class="step-number">
-
-1
-
-</div>
-
-<h4>
-
-Create Account
-
-</h4>
-
-<p>
-
-Sign up as a Client
-or Freelancer.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="col-lg-3">
-
-<div class="step-card">
-
-<div class="step-number">
-
-2
-
-</div>
-
-<h4>
-
-Complete Profile
-
-</h4>
-
-<p>
-
-Add your skills,
-portfolio,
-experience
-and details.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="col-lg-3">
-
-<div class="step-card">
-
-<div class="step-number">
-
-3
-
-</div>
-
-<h4>
-
-Connect
-
-</h4>
-
-<p>
-
-Apply for jobs
-or invite freelancers
-to your project.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="col-lg-3">
-
-<div class="step-card">
-
-<div class="step-number">
-
-4
-
-</div>
-
-<h4>
-
-Work & Earn
-
-</h4>
-
-<p>
-
-Collaborate,
-deliver work
-and receive secure
-payments.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================
-     WHY CHOOSE US
-========================================= -->
-
-<section class="why-us py-5">
-
-<div class="container">
-
-<div class="row align-items-center">
-
-<div class="col-lg-6">
-
-<img src="{% static 'images/why-us.png' %}"
-
-class="img-fluid why-image"
-
-alt="Why Choose Us">
-
-</div>
-
-<div class="col-lg-6">
-
-<span class="section-tag">
-
-Why NexWork
-
-</span>
-
-<h2 class="section-title mt-3">
-
-Smarter Hiring.
-Better Opportunities.
-
-</h2>
-
-<div class="feature-box">
-
-<div class="feature-icon">
-
-✔
-
-</div>
-
-<div>
-
-<h5>
-
-AI Powered Matching
-
-</h5>
-
-<p>
-
-Automatically recommends the best
-freelancers for every project.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="feature-box">
-
-<div class="feature-icon">
-
-✔
-
-</div>
-
-<div>
-
-<h5>
-
-Verified Professionals
-
-</h5>
-
-<p>
-
-Only trusted freelancers with
-verified profiles.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="feature-box">
-
-<div class="feature-icon">
-
-✔
-
-</div>
-
-<div>
-
-<h5>
-
-Secure Payments
-
-</h5>
-
-<p>
-
-Escrow-based payments
-protect both clients
-and freelancers.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="feature-box">
-
-<div class="feature-icon">
-
-✔
-
-</div>
-
-<div>
-
-<h5>
-
-Real-Time Messaging
-
-</h5>
-
-<p>
-
-Communicate instantly
-without leaving the platform.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- =========================================
-        FEATURED FREELANCERS
-========================================== -->
-
-<section class="featured-freelancers py-5">
-
-    <div class="container">
-
-        <div class="text-center mb-5">
-
-            <span class="section-tag">
-                Top Talent
-            </span>
-
-            <h2 class="section-title mt-3">
-                Featured Freelancers
-            </h2>
-
-            <p class="section-subtitle">
-                Discover skilled professionals ready to work on your project.
-            </p>
-
-        </div>
-
-        <div class="row g-4">
-
-            {% for freelancer in freelancers %}
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="freelancer-card">
-
-                    <div class="card-top">
-
-                        {% if freelancer.profile_photo %}
-
-                        <img src="{{ freelancer.profile_photo.url }}"
-                             class="profile-img"
-                             alt="{{ freelancer.user.username }}">
-
-                        {% else %}
-
-                        <img src="{% static 'images/default-user.png' %}"
-                             class="profile-img"
-                             alt="Default User">
-
-                        {% endif %}
-
-                        <span class="online-badge">
-                            ● Online
-                        </span>
-
-                    </div>
-
-                    <div class="card-body text-center">
-
-                        <h4>
-
-                            {{ freelancer.user.username }}
-
-                        </h4>
-
-                        <p class="profession">
-
-                            {{ freelancer.profession }}
-
-                        </p>
-
-                        <div class="rating">
-
-                            ⭐⭐⭐⭐⭐
-
-                            <span>
-
-                                (4.9)
-
-                            </span>
-
-                        </div>
-
-                        <div class="skills mt-3">
-
-                            <span class="skill-tag">
-                                Python
-                            </span>
-
-                            <span class="skill-tag">
-                                Django
-                            </span>
-
-                            <span class="skill-tag">
-                                AI
-                            </span>
-
-                        </div>
-
-                        <div class="price mt-4">
-
-                            <h5>
-
-                                ₹{{ freelancer.hourly_rate }}
-
-                                <small>/hour</small>
-
-                            </h5>
-
-                        </div>
-
-                        <a href="#"
-
-                           class="btn btn-primary w-100 mt-3">
-
-                            View Profile
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            {% empty %}
-
-            <div class="col-12">
-
-                <div class="alert alert-info text-center">
-
-                    No freelancers available yet.
-
-                </div>
-
-            </div>
-
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================
-        LATEST JOBS
-========================================== -->
-
-<section class="latest-jobs py-5 bg-light">
-
-<div class="container">
-
-<div class="text-center mb-5">
-
-<span class="section-tag">
-
-Latest Projects
-
-</span>
-
-<h2 class="section-title mt-3">
-
-Recently Posted Jobs
-
-</h2>
-
-<p class="section-subtitle">
-
-Explore exciting freelance opportunities.
-
-</p>
-
-</div>
-
-<div class="row">
-
-{% for job in jobs %}
-
-<div class="col-lg-6 mb-4">
-
-<div class="job-card">
-
-<div class="d-flex justify-content-between">
-
-<div>
-
-<h4>
-
-{{ job.title }}
-
-</h4>
-
-<p class="company-name">
-
-{{ job.client.username }}
-
-</p>
-
-</div>
-
-<div>
-
-<span class="badge bg-success">
-
-Open
-
-</span>
-
-</div>
-
-</div>
-
-<p class="mt-3">
-
-{{ job.description|truncatewords:20 }}
-
-</p>
-
-<div class="job-details mt-4">
-
-<span>
-
-💰 Budget:
-<strong>
-
-₹{{ job.budget }}
-
-</strong>
-
-</span>
-
-<span class="ms-4">
-
-📍
-
-{{ job.location }}
-
-</span>
-
-</div>
-
-<div class="mt-4">
-
-<a href="#"
-
-class="btn btn-outline-primary">
-
-View Details
-
-</a>
-
-<a href="#"
-
-class="btn btn-primary ms-2">
-
-Apply Now
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-{% empty %}
-
-<div class="col-12">
-
-<div class="alert alert-warning text-center">
-
-No jobs available.
-
-</div>
-
-</div>
-
-{% endfor %}
-
-</div>
-
-</div>
-
-</section>
-
-<!-- =========================================
-        PLATFORM STATISTICS
-========================================== -->
-
-<section class="platform-stats py-5">
-
-    <div class="container">
-
-        <div class="row text-center g-4">
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="stats-box">
-
-                    <div class="stats-icon">
-                        👨‍💻
-                    </div>
-
-                    <h2 class="counter" data-target="12000">
-                        0
-                    </h2>
-
-                    <p>
-                        Freelancers
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="stats-box">
-
-                    <div class="stats-icon">
-                        💼
-                    </div>
-
-                    <h2 class="counter" data-target="8500">
-                        0
-                    </h2>
-
-                    <p>
-                        Projects Posted
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="stats-box">
-
-                    <div class="stats-icon">
-                        🏢
-                    </div>
-
-                    <h2 class="counter" data-target="4500">
-                        0
-                    </h2>
-
-                    <p>
-                        Happy Clients
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="stats-box">
-
-                    <div class="stats-icon">
-                        🌍
-                    </div>
-
-                    <h2 class="counter" data-target="75">
-                        0
-                    </h2>
-
-                    <p>
-                        Countries Served
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================
-        TESTIMONIALS
-========================================== -->
-
-<section class="testimonials py-5 bg-light">
-
-<div class="container">
-
-<div class="text-center mb-5">
-
-<span class="section-tag">
-
-Testimonials
-
-</span>
-
-<h2 class="section-title mt-3">
-
-What Our Users Say
-
-</h2>
-
-<p class="section-subtitle">
-
-Real feedback from satisfied clients and freelancers.
-
-</p>
-
-</div>
-
-<div id="testimonialCarousel"
-
-class="carousel slide"
-
-data-bs-ride="carousel">
-
-<div class="carousel-inner">
-
-<div class="carousel-item active">
-
-<div class="testimonial-card text-center">
-
-<img src="{% static 'images/client1.jpg' %}"
-
-class="testimonial-img"
-
-alt="Client">
-
-<h4>
-
-Sarah Johnson
-
-</h4>
-
-<p class="role">
-
-Startup Founder
-
-</p>
-
-<p class="testimonial-text">
-
-"NexWork helped us hire an amazing Django developer
-within just 24 hours. The hiring experience was
-smooth and secure."
-
-</p>
-
-<div class="stars">
-
-⭐⭐⭐⭐⭐
-
-</div>
-
-</div>
-
-</div>
-
-<div class="carousel-item">
-
-<div class="testimonial-card text-center">
-
-<img src="{% static 'images/client2.jpg' %}"
-
-class="testimonial-img"
-
-alt="Client">
-
-<h4>
-
-David Wilson
-
-</h4>
-
-<p class="role">
-
-UI Designer
-
-</p>
-
-<p class="testimonial-text">
-
-"I found multiple international clients through
-NexWork. Payments were secure and communication
-was effortless."
-
-</p>
-
-<div class="stars">
-
-⭐⭐⭐⭐⭐
-
-</div>
-
-</div>
-
-</div>
-
-<div class="carousel-item">
-
-<div class="testimonial-card text-center">
-
-<img src="{% static 'images/client3.jpg' %}"
-
-class="testimonial-img"
-
-alt="Client">
-
-<h4>
-
-Emily Brown
-
-</h4>
-
-<p class="role">
-
-Business Owner
-
-</p>
-
-<p class="testimonial-text">
-
-"The AI freelancer recommendation feature saved
-our company hours of searching."
-
-</p>
-
-<div class="stars">
-
-⭐⭐⭐⭐⭐
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<button class="carousel-control-prev"
-
-type="button"
-
-data-bs-target="#testimonialCarousel"
-
-data-bs-slide="prev">
-
-<span class="carousel-control-prev-icon"></span>
-
-</button>
-
-<button class="carousel-control-next"
-
-type="button"
-
-data-bs-target="#testimonialCarousel"
-
-data-bs-slide="next">
-
-<span class="carousel-control-next-icon"></span>
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- =========================================
-        CALL TO ACTION
-========================================== -->
-
-<section class="cta-section">
-
-<div class="container">
-
-<div class="cta-box">
-
-<div class="row align-items-center">
-
-<div class="col-lg-8">
-
-<h2>
-
-Ready to Build Your Dream Team?
-
-</h2>
-
-<p>
-
-Join thousands of freelancers and businesses using
-NexWork to grow faster and work smarter.
-
-</p>
-
-</div>
-
-<div class="col-lg-4 text-lg-end">
-
-<a href="{% url 'signup' %}"
-
-class="btn btn-light btn-lg">
-
-Get Started
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- =========================================
-                FAQ SECTION
-========================================== -->
-
-<section class="faq-section py-5">
-
-<div class="container">
-
-<div class="text-center mb-5">
-
-<span class="section-tag">
-
-FAQ
-
-</span>
-
-<h2 class="section-title">
-
-Frequently Asked Questions
-
-</h2>
-
-<p class="section-subtitle">
-
-Everything you need to know about NexWork.
-
-</p>
-
-</div>
-
-<div class="accordion" id="faqAccordion">
-
-<div class="accordion-item">
-
-<h2 class="accordion-header">
-
-<button class="accordion-button"
-
-type="button"
-
-data-bs-toggle="collapse"
-
-data-bs-target="#faq1">
-
-How do I hire a freelancer?
-
-</button>
-
-</h2>
-
-<div id="faq1"
-
-class="accordion-collapse collapse show"
-
-data-bs-parent="#faqAccordion">
-
-<div class="accordion-body">
-
-Create a client account, post your project,
-receive proposals, compare freelancers,
-and hire the best match.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="accordion-item">
-
-<h2 class="accordion-header">
-
-<button class="accordion-button collapsed"
-
-type="button"
-
-data-bs-toggle="collapse"
-
-data-bs-target="#faq2">
-
-How do freelancers receive payment?
-
-</button>
-
-</h2>
-
-<div id="faq2"
-
-class="accordion-collapse collapse"
-
-data-bs-parent="#faqAccordion">
-
-<div class="accordion-body">
-
-Payments are securely processed after the
-project is completed and approved.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="accordion-item">
-
-<h2 class="accordion-header">
-
-<button class="accordion-button collapsed"
-
-type="button"
-
-data-bs-toggle="collapse"
-
-data-bs-target="#faq3">
-
-Is NexWork free to join?
-
-</button>
-
-</h2>
-
-<div id="faq3"
-
-class="accordion-collapse collapse"
-
-data-bs-parent="#faqAccordion">
-
-<div class="accordion-body">
-
-Yes.
-Creating an account is completely free for
-both freelancers and clients.
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- =========================================
-            NEWSLETTER
-========================================== -->
-
-<section class="newsletter py-5">
-
-<div class="container">
-
-<div class="newsletter-box">
-
-<div class="row align-items-center">
-
-<div class="col-lg-7">
-
-<h2>
-
-Stay Updated
-
-</h2>
-
-<p>
-
-Subscribe to receive the latest freelance jobs,
-platform updates and opportunities.
-
-</p>
-
-</div>
-
-<div class="col-lg-5">
-
-<form class="d-flex">
-
-<input
-type="email"
-class="form-control"
-
-placeholder="Enter your email">
-
-<button class="btn btn-primary ms-2">
-
-Subscribe
-
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- =========================================
-            FOOTER
-========================================== -->
-
-<footer class="footer">
-
-<div class="container">
-
-<div class="row gy-5">
-
-<div class="col-lg-4">
-
-<h2 class="logo">
-
-<span class="nex">
-
-Nex
-
-</span>
-
-<span class="work">
-
-Work
-
-</span>
-
-</h2>
-
-<p>
-
-NexWork is an AI-powered freelance marketplace
-connecting talented freelancers with businesses
-around the world.
-
-</p>
-
-<div class="social-icons">
-
-<a href="#">
-
-<i class="bi bi-facebook"></i>
-
-</a>
-
-<a href="#">
-
-<i class="bi bi-instagram"></i>
-
-</a>
-
-<a href="#">
-
-<i class="bi bi-linkedin"></i>
-
-</a>
-
-<a href="#">
-
-<i class="bi bi-twitter-x"></i>
-
-</a>
-
-<a href="#">
-
-<i class="bi bi-github"></i>
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-lg-2">
-
-<h4>
-
-Company
-
-</h4>
-
-<ul>
-
-<li>
-
-<a href="#">
-
-Home
-
-</a>
-
-</li>
-
-<li>
-
-<a href="#">
-
-About
-
-</a>
-
-</li>
-
-<li>
-
-<a href="#">
-
-Jobs
-
-</a>
-
-</li>
-
-<li>
-
-<a href="#">
-
-Freelancers
-
-</a>
-
-</li>
-
-</ul>
-
-</div>
-
-<div class="col-lg-3">
-
-<h4>
-
-Support
-
-</h4>
-
-<ul>
-
-<li>
-
-<a href="#">
-
-Help Center
-
-</a>
-
-</li>
-
-<li>
-
-<a href="#">
-
-Privacy Policy
-
-</a>
-
-</li>
-
-<li>
-
-<a href="#">
-
-Terms & Conditions
-
-</a>
-
-</li>
-
-<li>
-
-<a href="#">
-
-Contact Us
-
-</a>
-
-</li>
-
-</ul>
-
-</div>
-
-<div class="col-lg-3">
-
-<h4>
-
-Contact
-
-</h4>
-
-<p>
-
-📧 support@nexwork.com
-
-</p>
-
-<p>
-
-📞 +91 98765 43210
-
-</p>
-
-<p>
-
-📍 Chennai, India
-
-</p>
-
-</div>
-
-</div>
-
-<hr>
-
-<div class="text-center">
-
-<p>
-
-© 2026 NexWork.
-
-All Rights Reserved.
-
-</p>
-
-</div>
-
-</div>
-
-</footer>
-
-
-
-<!-- =========================================
-            BACK TO TOP
-========================================== -->
-
-<button id="topBtn">
-
-↑
-
-</button>
-
-
-
-<!-- Bootstrap -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Script -->
-
-<script src="{% static 'script.js' %}"></script>
+    </section>
 
 </body>
-
 </html>

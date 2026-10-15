@@ -3,115 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | NexWork</title>
+    <title>Login | PitchPod</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* ===== BURGUNDY & CREAM COLOR PALETTE ===== */
+        :root {
+            --bg-cream: #FAF7F0; 
+            --bg-cream-alt: #F2EFE8; 
+            --brand-burgundy: #721C24; 
+            --brand-burgundy-hover: #5A161C;
+            --text-dark: #331A1C; 
+            --text-cream: #FAF7F0;
+        }
+
+        * {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
         /* ===== LOGIN PAGE BACKGROUND ===== */
-.login-body {
-    background: linear-gradient(135deg, #eef2ff, #f8f9fa);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .login-body {
+            /* Subtle radial gradient using the cream tones for depth */
+            background: radial-gradient(circle at center, var(--bg-cream) 0%, var(--bg-cream-alt) 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            color: var(--text-dark);
+        }
 
-/* ===== WRAPPER ===== */
-.login-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
+        /* ===== WRAPPER ===== */
+        .login-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
 
-/* ===== LOGIN CARD ===== */
-.login-card {
-    background: white;
-    padding: 35px;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    width: 380px;
-    text-align: center;
-    transition: 0.3s;
-}
+        /* ===== LOGIN CARD ===== */
+        .login-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            /* Added a subtle burgundy tint to the shadow */
+            box-shadow: 0 10px 30px rgba(114, 28, 36, 0.08);
+            border: 1px solid rgba(114, 28, 36, 0.05);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-.login-card:hover {
-    transform: translateY(-5px);
-}
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(114, 28, 36, 0.12);
+        }
 
-/* ===== TITLE ===== */
-.title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: #333;
-}
+        /* ===== TITLE ===== */
+        .title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
 
-.brand {
-    color: #4f46e5;
-}
+        .brand {
+            color: var(--brand-burgundy);
+        }
 
-.subtitle {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 20px;
-}
+        .subtitle {
+            font-size: 14px;
+            color: #665557;
+            margin-bottom: 25px;
+        }
 
-/* ===== INPUTS ===== */
-.login-card label {
-    float: left;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
+        /* ===== INPUTS ===== */
+        .login-card label {
+            float: left;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
 
-.login-card input {
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    transition: 0.3s;
-}
+        .login-card input {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #E0D8D9;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
 
-.login-card input:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 5px rgba(79,70,229,0.3);
-}
+        .login-card input:focus {
+            border-color: var(--brand-burgundy);
+            /* Burgundy focus ring */
+            box-shadow: 0 0 0 3px rgba(114, 28, 36, 0.15); 
+            background-color: #ffffff;
+            outline: none;
+        }
 
-/* ===== LOGIN BUTTON ===== */
-.login-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #4f46e5, #6366f1);
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: 600;
-    border: none;
-    margin-top: 10px;
-    transition: 0.3s;
-}
+        /* ===== LOGIN BUTTON ===== */
+        .login-btn {
+            width: 100%;
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 2px solid var(--brand-burgundy);
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
 
-.login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(79,70,229,0.3);
-}
+        /* Matches the home.html button hover effect */
+        .login-btn:hover {
+            background-color: var(--bg-cream);
+            color: var(--brand-burgundy);
+            transform: translateY(-2px);
+        }
 
-/* ===== BOTTOM TEXT ===== */
-.bottom-text {
-    margin-top: 15px;
-    font-size: 13px;
-}
+        /* ===== BOTTOM TEXT ===== */
+        .bottom-text {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #665557;
+        }
 
-.bottom-text a {
-    color: #4f46e5;
-    font-weight: 600;
-    text-decoration: none;
-}
+        .bottom-text a {
+            color: var(--brand-burgundy);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-.bottom-text a:hover {
-    text-decoration: underline;
-}
+        .bottom-text a:hover {
+            color: var(--brand-burgundy-hover);
+            text-decoration: underline;
+        }
+
+        /* Optional: Style the Django messages alert to fit the theme */
+        .alert-danger {
+            background-color: #F8D7DA;
+            color: var(--brand-burgundy);
+            border: 1px solid #F5C6CB;
+            border-radius: 8px;
+            font-size: 14px;
+        }
     </style>
-
-
 </head>
 
 <body class="login-body">
@@ -121,7 +161,7 @@
     <div class="login-card">
 
         <h2 class="title">
-            Welcome to <span class="brand">NexWork</span>
+            Welcome to <span class="brand">PitchPod</span>
         </h2>
 
         <p class="subtitle">Login to continue your journey</p>
@@ -140,7 +180,7 @@
                 <input type="text" name="username" class="form-control" placeholder="Enter username" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-4">
                 <label>Password</label>
                 <input type="password" name="password" class="form-control" placeholder="Enter password" required>
             </div>
