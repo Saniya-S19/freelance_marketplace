@@ -3,11 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Dashboard</title>
+    <title>Client Dashboard | PitchPod</title>
+    <style>
+        /* ===== BURGUNDY & CREAM COLOR PALETTE ===== */
+        :root {
+            --bg-cream: #FAF7F0; 
+            --bg-cream-alt: #F2EFE8; 
+            --brand-burgundy: #721C24; 
+            --brand-burgundy-hover: #5A161C;
+            --text-dark: #331A1C; 
+            --text-muted: #665557;
+            --text-cream: #FAF7F0;
+            --border-color: rgba(114, 28, 36, 0.1);
+            --status-pending: #d4af37; /* Golden tone for pending */
+            --status-active: #27ae60;  /* Green for active */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-cream-alt);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--brand-burgundy);
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .profile-widget {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 10px rgba(114, 28, 36, 0.15);
+        }
+
+        .profile-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .profile-role {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Navigation Links */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            margin-top: auto;
+            display: block;
+            text-align: center;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--brand-burgundy);
+            background-color: transparent;
+            border: 2px solid var(--brand-burgundy);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-left: 280px; 
+            padding: 3rem 4rem;
+            width: calc(100% - 280px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: var(--brand-burgundy);
+        }
+
+        .btn-action {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            background-color: var(--brand-burgundy-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(114, 28, 36, 0.05);
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Content Sections */
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--brand-burgundy);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-all {
+            font-size: 0.9rem;
+            color: var(--brand-burgundy);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+        /* Project & Pitch Cards */
+        .project-card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(114, 28, 36, 0.08);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .project-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .badge.pending { background-color: var(--status-pending); }
+        .badge.active { background-color: var(--status-active); }
+
+        /* Progress Bar for Active Projects */
+        .progress-container {
+            margin-top: 1rem;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--bg-cream-alt);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--brand-burgundy);
+            width: 65%; /* Example progress */
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome Client</h1>
-    <p>You can post projects and hire freelancer</p>
-    
+
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+        <a href="#" class="brand">PitchPod</a>
+
+        <div class="profile-widget">
+            <div class="profile-pic">V</div>
+            <div class="profile-name">Vertex Capital</div>
+            <div class="profile-role">Enterprise Client</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active">Dashboard</a>
+            <a href="#" class="nav-item">Discover Talent</a>
+            <a href="#" class="nav-item">Sent Pitches (2)</a>
+            <a href="#" class="nav-item">Active Projects</a>
+            <a href="#" class="nav-item">Billing & Escrow</a>
+            <a href="#" class="nav-item">Company Profile</a>
+        </nav>
+
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="header">
+            <h1>Welcome back, Vertex Capital.</h1>
+            <a href="#" class="btn-action">+ Browse Pods</a>
+        </div>
+
+        <!-- Client Analytics / Snapshot -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Active Projects</div>
+                <div class="stat-value">1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Funds in Escrow</div>
+                <div class="stat-value">$15,000</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Pending Pitches</div>
+                <div class="stat-value">2</div>
+            </div>
+        </div>
+
+        <!-- Active Deployments -->
+        <div class="section-title">
+            <span>Active Deployments</span>
+            <a href="#" class="view-all">View Milestones</a>
+        </div>
+        
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h3 class="project-title">Enterprise FinTech Application</h3>
+                    <div class="project-meta">Assigned Pod: Web3 Launch Squad • Budget: $15,000</div>
+                </div>
+                <span class="badge active">In Progress</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-labels">
+                    <span>Milestone 2 of 3: Backend Integration</span>
+                    <span>65%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sent Pitches Status -->
+        <div class="section-title" style="margin-top: 3rem;">
+            <span>Sent Pitches Tracking</span>
+            <a href="#" class="view-all">View All</a>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h3 class="project-title">SaaS Dashboard Refactor</h3>
+                    <div class="project-meta">Pitched to: Alex Developer (Solo) • Proposed Budget: $4,500</div>
+                </div>
+                <span class="badge pending">Awaiting Response</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h3 class="project-title">Mobile App Wireframing</h3>
+                    <div class="project-meta">Pitched to: Design Masters (Pod) • Proposed Budget: $8,000</div>
+                </div>
+                <span class="badge pending">Pod Voting in Progress</span>
+            </div>
+        </div>
+
+    </main>
+
 </body>
 </html>

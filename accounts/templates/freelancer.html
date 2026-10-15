@@ -3,21 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freelancer Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <title>Freelancer Dashboard | PitchPod</title>
+    <style>
+        /* ===== BURGUNDY & CREAM COLOR PALETTE ===== */
+        :root {
+            --bg-cream: #FAF7F0; 
+            --bg-cream-alt: #F2EFE8; 
+            --brand-burgundy: #721C24; 
+            --brand-burgundy-hover: #5A161C;
+            --text-dark: #331A1C; 
+            --text-muted: #665557;
+            --text-cream: #FAF7F0;
+            --border-color: rgba(114, 28, 36, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-cream-alt);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--brand-burgundy);
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .profile-widget {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 10px rgba(114, 28, 36, 0.15);
+        }
+
+        .profile-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .profile-role {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .social-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--brand-burgundy);
+        }
+
+        /* Navigation Links */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            margin-top: auto;
+            display: block;
+            text-align: center;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--brand-burgundy);
+            background-color: transparent;
+            border: 2px solid var(--brand-burgundy);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-left: 280px; 
+            padding: 3rem 4rem;
+            width: calc(100% - 280px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: var(--brand-burgundy);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(114, 28, 36, 0.05);
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Content Sections */
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--brand-burgundy);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Pitch Inbox Cards */
+        .pitch-card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .pitch-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(114, 28, 36, 0.08);
+        }
+
+        .pitch-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .pitch-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .pitch-budget {
+            font-weight: 700;
+            color: var(--brand-burgundy);
+            font-size: 1.2rem;
+            text-align: right;
+        }
+
+        .btn-action {
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background-color: var(--brand-burgundy-hover);
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Freelancer Dashboard</h1>
-    <h1>welcome {{ user.username }}</h1>
-    <hr>
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+        <a href="#" class="brand">PitchPod</a>
 
+        <div class="profile-widget">
+            <div class="profile-pic">A</div>
+            <div class="profile-name">Alex Developer</div>
+            <div class="profile-role">Full-Stack Django & React</div>
+            <div class="social-stats">
+                <span>1.2k Followers</span>
+                <span>45 Endorsements</span>
+            </div>
+        </div>
 
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active">Dashboard</a>
+            <a href="#" class="nav-item">Pitch Inbox (3)</a>
+            <a href="#" class="nav-item">My Pods</a>
+            <a href="#" class="nav-item">Analytics</a>
+            <a href="#" class="nav-item">Profile</a>
+        </nav>
 
-    <a href="{% url 'login' %}"><button>Log out</button></a>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </aside>
 
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="header">
+            <h1>Welcome back, Alex.</h1>
+            <button class="btn-action">Create New Pod</button>
+        </div>
 
-    
+        <!-- Creator/Freelancer Analytics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Profile Reach (This Week)</div>
+                <div class="stat-value">342 Views</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Funds in Escrow</div>
+                <div class="stat-value">$4,500</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Active Deployments</div>
+                <div class="stat-value">2 Projects</div>
+            </div>
+        </div>
+
+        <!-- Reverse Pitch Inbox Preview -->
+        <h2 class="section-title">Recent Pitches (Inbox)</h2>
+        
+        <div class="pitch-card">
+            <div class="pitch-info">
+                <h3>Enterprise FinTech Application</h3>
+                <div class="pitch-meta">Client: Vertex Capital • Est. 3 Months • Team Required: Solo or Pod</div>
+            </div>
+            <div>
+                <div class="pitch-budget">$12,000 - $15,000</div>
+                <button class="btn-action">Review Pitch</button>
+            </div>
+        </div>
+
+        <div class="pitch-card">
+            <div class="pitch-info">
+                <h3>SaaS Dashboard Refactor</h3>
+                <div class="pitch-meta">Client: CloudSync Inc. • Est. 4 Weeks • Team Required: Solo</div>
+            </div>
+            <div>
+                <div class="pitch-budget">$4,500</div>
+                <button class="btn-action">Review Pitch</button>
+            </div>
+        </div>
+
+    </main>
+
 </body>
 </html>

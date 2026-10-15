@@ -16,6 +16,9 @@ def freelancer(request):
 def home(request):
     return render(request, 'home.html')
 
+def logout(request):
+    return render(request, 'login.html')
+
 
 def find_freelancers(request):
     return render(request, 'freelancer.html')
