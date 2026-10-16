@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Profile
+from pods.models import Pod
 
 def role_required(allowed_role):
     def decorator(view_func):
@@ -89,14 +90,34 @@ def client(request):
 @login_required(login_url='login')
 @role_required('freelancer')
 def freelancer(request):
-    return render(request, 'freelancer.html')
+    my_pods = request.user.joined_pods.all()
+
+    context = {
+        'my_pods': my_pods
+    }
+    return render(request, 'freelancer.html', context)
 
 @login_required(login_url='login')
 @role_required('client')
 def find_freelancers(request):
-    freelancers = User.objects.filter(profile__role='freelancer')
+    # Capture the word after '?view=' in the URL. If missing, default to 'all'
+    view_type = request.GET.get('view', 'all')
+    
+    freelancers = None
+    pods = None
+    
+    # Only fetch Pods if the client clicked 'Browse Pods' or wants to see 'all'
+    if view_type in ['pods', 'all']:
+        pods = Pod.objects.all().order_by('-created_at')
+        
+    # Only fetch Solo Talent if the client clicked 'Browse Talent' or wants to see 'all'
+    if view_type in ['solo', 'all']:
+        freelancers = User.objects.filter(profile__role='freelancer')
+        
     context = {
-        'freelancers': freelancers
+        'freelancers': freelancers,
+        'pods': pods,
+        'view_type': view_type # Pass this to the template to hide headers
     }
     return render(request, 'find_freelancers.html', context)
 

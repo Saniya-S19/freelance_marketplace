@@ -305,7 +305,7 @@
 
         <nav class="nav-menu">
             <a href="#" class="nav-item active">Dashboard</a>
-            <a href="{% url 'find_freelancers'%}" class="nav-item">Discover Talent</a>
+            <a href="{% url 'find_freelancers'%}?view=solo" class="nav-item">Discover Talent</a>
             <a href="" class="nav-item">Sent Pitches (2)</a>
             <a href="#" class="nav-item">Active Projects</a>
             <a href="#" class="nav-item">Billing & Escrow</a>
@@ -319,7 +319,7 @@
     <main class="main-content">
         <div class="header">
             <h1>Welcome back, Vertex Capital.</h1>
-            <a href="{% url 'find_freelancers'%}" class="btn-action">+ Browse Pods</a>
+            <a href="{% url 'find_freelancers'%}?view=pods" class="btn-action">+ Browse Pods</a>
         </div>
 
         <!-- Client Analytics / Snapshot -->
