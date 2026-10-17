@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'profiles',
     'pods',
+    'marketplace',
 ]
 
 MIDDLEWARE = [
