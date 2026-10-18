@@ -322,6 +322,48 @@
             <a href="{% url 'find_freelancers'%}?view=pods" class="btn-action">+ Browse Pods</a>
         </div>
 
+        <!-- ===== OUTGOING PITCHES ===== -->
+        <h2 style="color: var(--brand-burgundy); margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem;">Active Pitches</h2>
+
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;">
+            {% if sent_pitches %}
+                {% for pitch in sent_pitches %}
+                <div style="background-color: #ffffff; padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(114, 28, 36, 0.05); position: relative;">
+                    
+                    <h3 style="color: var(--brand-burgundy); margin-bottom: 0.5rem; font-size: 1.2rem;">
+                        {{ pitch.project_title }}
+                    </h3>
+                    
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Pitched to:</strong> 
+                        {% if pitch.pod %}
+                            {{ pitch.pod.name }} (Pod)
+                        {% else %}
+                            {{ pitch.freelancer.username }} (Solo)
+                        {% endif %}
+                    </p>
+                    
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.4;">
+                        {{ pitch.description|truncatechars:80 }}
+                    </p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                        <span style="font-weight: 700; color: var(--text-dark);">${{ pitch.budget }}</span>
+                        
+                        <!-- Using the dynamic status class we created -->
+                        <span class="status-{{ pitch.status }}" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">
+                            Status: {{ pitch.status }}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1.5rem; background: #fff; border-radius: 12px; border: 1px dashed var(--border-color);">
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">You haven't pitched any projects yet. Head to the talent directory to get started.</p>
+                </div>
+            {% endif %}
+        </div>
+
         <!-- Client Analytics / Snapshot -->
         <div class="stats-grid">
             <div class="stat-card">

@@ -8,7 +8,6 @@
         /* ===== BURGUNDY & CREAM COLOR PALETTE ===== */
         :root {
             --bg-cream: #FAF7F0; 
-            --bg-cream-alt: #F2EFE8; 
             --brand-burgundy: #721C24; 
             --brand-burgundy-hover: #5A161C;
             --text-dark: #331A1C; 
@@ -33,115 +32,53 @@
 
         /* ===== SIDEBAR ===== */
         .sidebar {
-            width: 280px;
-            background-color: var(--bg-cream-alt);
+            width: 260px;
+            background-color: #ffffff;
             border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
-            padding: 2rem 1.5rem;
-            position: fixed;
-            height: 100vh;
         }
 
-        .brand {
-            font-size: 1.6rem;
+        .logo {
+            font-size: 1.8rem;
             font-weight: 800;
             color: var(--brand-burgundy);
             text-decoration: none;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
+            letter-spacing: -0.5px;
         }
 
-        .profile-widget {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .profile-pic {
-            width: 80px;
-            height: 80px;
-            background-color: var(--brand-burgundy);
-            color: var(--text-cream);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-            box-shadow: 0 4px 10px rgba(114, 28, 36, 0.15);
-        }
-
-        .profile-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .profile-role {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .social-stats {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--brand-burgundy);
-        }
-
-        /* Navigation Links */
-        .nav-menu {
-            list-style: none;
+        .nav-links {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 1rem;
             flex-grow: 1;
         }
 
         .nav-item {
-            display: block;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            color: var(--text-dark);
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--brand-burgundy);
-            color: var(--text-cream);
-        }
-
-        /* Logout Button */
-        .logout-btn {
-            margin-top: auto;
-            display: block;
-            text-align: center;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            color: var(--brand-burgundy);
-            background-color: transparent;
-            border: 2px solid var(--brand-burgundy);
-            text-decoration: none;
+            color: var(--text-muted);
             font-weight: 600;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
             transition: all 0.2s ease;
         }
 
-        .logout-btn:hover {
+        .nav-item.active {
             background-color: var(--brand-burgundy);
             color: var(--text-cream);
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: rgba(114, 28, 36, 0.05);
+            color: var(--brand-burgundy);
         }
 
         /* ===== MAIN CONTENT ===== */
         .main-content {
-            margin-left: 280px; 
+            flex-grow: 1;
             padding: 3rem 4rem;
-            width: calc(100% - 280px);
         }
 
         .header {
@@ -149,372 +86,310 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 3rem;
+            position: relative; 
+            z-index: 10;
         }
 
         .header h1 {
-            font-size: 2rem;
             color: var(--brand-burgundy);
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
         }
 
-        /* Stats Grid */
+        .section-title {
+            color: var(--brand-burgundy);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== DASHBOARD GRIDS ===== */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .stat-card {
             background-color: #ffffff;
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(114, 28, 36, 0.05);
-        }
-
-        .stat-title {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        /* Content Sections */
-        .section-title {
-            font-size: 1.3rem;
-            color: var(--brand-burgundy);
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-        }
-
-        /* Pitch Inbox Cards */
-        .pitch-card {
-            background-color: #ffffff;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .pitch-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(114, 28, 36, 0.08);
-        }
-
-        .pitch-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .pitch-meta {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .pitch-budget {
-            font-weight: 700;
-            color: var(--brand-burgundy);
-            font-size: 1.2rem;
-            text-align: right;
+            box-shadow: 0 4px 15px rgba(114, 28, 36, 0.03);
         }
 
         .btn-action {
             background-color: var(--brand-burgundy);
             color: var(--text-cream);
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 0.5rem;
-            transition: background-color 0.2s ease;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(114, 28, 36, 0.15);
         }
 
         .btn-action:hover {
             background-color: var(--brand-burgundy-hover);
+            transform: translateY(-2px);
         }
 
+        /* ===== PITCH STATUS COLORS ===== */
+        .status-pending { color: #B8860B; }
+        .status-accepted { color: #2E8B57; }
+        .status-declined { color: #DC143C; }
+
         /* ===== MODAL STYLING ===== */
-.modal-overlay {
-    display: none; 
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(51, 26, 28, 0.6); /* Dark burgundy glass effect */
-    backdrop-filter: blur(5px);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-}
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(51, 26, 28, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
 
-.modal-content {
-    background-color: #ffffff;
-    width: 100%;
-    max-width: 500px;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 15px 35px rgba(114, 28, 36, 0.2);
-    border: 1px solid var(--border-color);
-    position: relative;
-}
+        .modal-content {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(114, 28, 36, 0.2);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
 
-.modal-header {
-    font-size: 1.5rem;
-    color: var(--brand-burgundy);
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
+        .modal-header {
+            font-size: 1.5rem;
+            color: var(--brand-burgundy);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
 
-.close-btn {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
 
-.close-btn:hover { color: var(--brand-burgundy); }
+        .close-btn:hover { color: var(--brand-burgundy); }
 
-.form-group {
-    margin-bottom: 1.5rem;
-}
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-.form-group label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text-dark);
-}
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
 
-.form-group input, .form-group textarea {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-cream);
-    color: var(--text-dark);
-    outline: none;
-    transition: border-color 0.3s ease;
-    font-family: inherit;
-}
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
 
-.form-group input:focus, .form-group textarea:focus {
-    border-color: var(--brand-burgundy);
-    box-shadow: 0 0 0 3px rgba(114, 28, 36, 0.1);
-}
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--brand-burgundy);
+            box-shadow: 0 0 0 3px rgba(114, 28, 36, 0.1);
+        }
 
-.btn-submit {
-    width: 100%;
-    background-color: var(--brand-burgundy);
-    color: var(--text-cream);
-    border: none;
-    padding: 0.8rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.btn-submit:hover { background-color: var(--brand-burgundy-hover); }
+        .btn-submit {
+            width: 100%;
+            background-color: var(--brand-burgundy);
+            color: var(--text-cream);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
+        .btn-submit:hover { 
+            background-color: var(--brand-burgundy-hover); 
+        }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Layout -->
     <aside class="sidebar">
-        <a href="#" class="brand">PitchPod</a>
-
-        <div class="profile-widget">
-            <div class="profile-pic">A</div>
-            <div class="profile-name">Alex Developer</div>
-            <div class="profile-role">Full-Stack Django & React</div>
-            <div class="social-stats">
-                <span>1.2k Followers</span>
-                <span>45 Endorsements</span>
-            </div>
-        </div>
-
-        <nav class="nav-menu">
+        <a href="{% url 'home' %}" class="logo">PitchPod</a>
+        <nav class="nav-links">
             <a href="#" class="nav-item active">Dashboard</a>
-            <a href="#" class="nav-item">Pitch Inbox (3)</a>
             <a href="#" class="nav-item">My Pods</a>
-            <a href="#" class="nav-item">Analytics</a>
-            <a href="#" class="nav-item">Profile</a>
+            <a href="#" class="nav-item">Messages</a>
+            <a href="{% url 'logout' %}" class="nav-item" style="margin-top: auto; color: var(--brand-burgundy);">Logout</a>
         </nav>
-
-        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="main-content">
-        <div class="header" style="position: relative; z-index: 10;">
-    <h1>Welcome back, {{ request.user.username|title }}.</h1>
-    <button id="openPodModal" class="btn-action" style="cursor: pointer; position: relative; z-index: 50;">
-        Create New Pod
-    </button>
-</div>
-
-        <!-- Creator/Freelancer Analytics -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-title">Profile Reach (This Week)</div>
-                <div class="stat-value">342 Views</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">Funds in Escrow</div>
-                <div class="stat-value">$4,500</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">Active Deployments</div>
-                <div class="stat-value">2 Projects</div>
-            </div>
-        </div>
-
-        <!-- My Active Pods Section -->
-<h2 class="section-title">My Active Pods</h2>
-
-<div class="stats-grid">
-    {% if my_pods %}
-        {% for pod in my_pods %}
-        <div class="stat-card" style="position: relative;">
-            
-            <!-- Show a premium badge if this user is the Captain -->
-            {% if pod.captain == request.user %}
-                <span style="position: absolute; top: 1.5rem; right: 1.5rem; background-color: var(--brand-burgundy); color: var(--text-cream); padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.7rem; font-weight: bold;">
-                    Captain
-                </span>
-            {% endif %}
-            
-            <h3 style="color: var(--brand-burgundy); margin-bottom: 0.5rem; font-size: 1.2rem; padding-right: 4rem;">
-                {{ pod.name }}
-            </h3>
-            
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.4;">
-                {{ pod.description|truncatechars:80 }}
-            </p>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-dark);">
-                    Squad Size: {{ pod.members.count }}
-                </span>
-                <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Manage</button>
-            </div>
-        </div>
-        {% endfor %}
-    {% else %}
-        <div class="stat-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem 1.5rem;">
-            <p style="color: var(--text-muted); font-size: 1.1rem;">You haven't joined or deployed any Pods yet.</p>
-        </div>
-    {% endif %}
-</div>
-
-        <!-- Reverse Pitch Inbox Preview -->
-        <h2 class="section-title">Recent Pitches (Inbox)</h2>
-        
-        <div class="pitch-card">
-            <div class="pitch-info">
-                <h3>Enterprise FinTech Application</h3>
-                <div class="pitch-meta">Client: Vertex Capital • Est. 3 Months • Team Required: Solo or Pod</div>
-            </div>
-            <div>
-                <div class="pitch-budget">$12,000 - $15,000</div>
-                <button class="btn-action">Review Pitch</button>
-            </div>
-        </div>
-
-        <div class="pitch-card">
-            <div class="pitch-info">
-                <h3>SaaS Dashboard Refactor</h3>
-                <div class="pitch-meta">Client: CloudSync Inc. • Est. 4 Weeks • Team Required: Solo</div>
-            </div>
-            <div>
-                <div class="pitch-budget">$4,500</div>
-                <button class="btn-action">Review Pitch</button>
-            </div>
-        </div>
-
         <div class="header">
-            <h1>Welcome back, Alex.</h1>
-                <button id="openPodModal" class="btn-action">Create New Pod</button>
+            <h1>Welcome back, {{ request.user.username|title }}.</h1>
+            <!-- STRICTLY A BUTTON, NO 'href' or '<a>' tags -->
+            <button id="openPodModal" class="btn-action" style="cursor: pointer; position: relative; z-index: 50;">
+                Create New Pod
+            </button>
         </div>
 
         {% if messages %}
             <div style="margin-bottom: 2rem;">
-                {% for message in messages %}
-                    <div style="padding: 1rem; border-radius: 8px; background-color: #F8D7DA; color: var(--brand-burgundy); border: 1px solid rgba(114, 28, 36, 0.2);">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+            {% for message in messages %}
+                <div style="padding: 1rem; border-radius: 8px; background-color: #F8D7DA; color: var(--brand-burgundy); border: 1px solid rgba(114, 28, 36, 0.2);">
+                    {{ message }}
+                </div>
+            {% endfor %}
             </div>
         {% endif %}
 
+        <!-- ===== MY ACTIVE PODS ===== -->
+        <h2 class="section-title">My Active Pods</h2>
+        <div class="stats-grid">
+            {% if my_pods %}
+                {% for pod in my_pods %}
+                <div class="stat-card" style="position: relative;">
+                    
+                    {% if pod.captain == request.user %}
+                        <span style="position: absolute; top: 1.5rem; right: 1.5rem; background-color: var(--brand-burgundy); color: var(--text-cream); padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.7rem; font-weight: bold;">
+                            Captain
+                        </span>
+                    {% endif %}
+                    
+                    <h3 style="color: var(--brand-burgundy); margin-bottom: 0.5rem; font-size: 1.2rem; padding-right: 4rem;">
+                        {{ pod.name }}
+                    </h3>
+                    
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.4;">
+                        {{ pod.description|truncatechars:80 }}
+                    </p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-dark);">
+                            Squad Size: {{ pod.members.count }}
+                        </span>
+                        <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Manage</button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="stat-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem 1.5rem;">
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">You haven't joined or deployed any Pods yet.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- ===== PITCH INBOX ===== -->
+        <h2 class="section-title" style="margin-top: 3rem;">Pitch Inbox</h2>
+        <div class="stats-grid">
+            {% if incoming_pitches %}
+                {% for pitch in incoming_pitches %}
+                <div class="stat-card" style="position: relative; border-left: 4px solid var(--brand-burgundy);">
+                    
+                    <span style="position: absolute; top: 1.5rem; right: 1.5rem; background-color: rgba(114, 28, 36, 0.1); color: var(--brand-burgundy); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">
+                        {% if pitch.pod %}
+                            Pod: {{ pitch.pod.name }}
+                        {% else %}
+                            Solo Project
+                        {% endif %}
+                    </span>
+                    
+                    <h3 style="color: var(--text-dark); margin-bottom: 0.5rem; font-size: 1.3rem; padding-right: 6rem;">
+                        {{ pitch.project_title }}
+                    </h3>
+                    
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>From:</strong> {{ pitch.client.username }} &nbsp;|&nbsp; 
+                        <strong>Budget:</strong> ${{ pitch.budget }}
+                    </p>
+                    
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.4;">
+                        {{ pitch.description|truncatechars:100 }}
+                    </p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                        <span class="status-{{ pitch.status }}" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">
+                            {{ pitch.status }}
+                        </span>
+                        <button class="btn-action" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Review Pitch</button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="stat-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem 1.5rem;">
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">Your inbox is empty. No pitches received yet.</p>
+                </div>
+            {% endif %}
+        </div>
     </main>
-<!-- Create Pod Modal -->
-<div id="podModal" class="modal-overlay">
-    <div class="modal-content">
-        <button id="closePodModal" class="close-btn">&times;</button>
-        <h2 class="modal-header">Deploy a New Pod</h2>
-        
-        <form method="POST" action="{% url 'create_pod' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label>Pod Name</label>
-                <input type="text" name="pod_name" placeholder="e.g., Web3 Launch Squad" required>
-            </div>
+
+    <!-- Create Pod Modal -->
+    <div id="podModal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="closePodModal" class="close-btn">&times;</button>
+            <h2 class="modal-header">Deploy a New Pod</h2>
             
-            <div class="form-group">
-                <label>Pod Specialty / Description</label>
-                <textarea name="pod_description" rows="4" placeholder="What does your Pod specialize in delivering?" required></textarea>
-            </div>
-            
-            <button type="submit" class="btn-submit">Initialize Pod</button>
-        </form>
+            <form method="POST" action="{% url 'create_pod' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Pod Name</label>
+                    <input type="text" name="pod_name" placeholder="e.g., Web3 Launch Squad" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Pod Specialty / Description</label>
+                    <textarea name="pod_description" rows="4" placeholder="What does your Pod specialize in delivering?" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">Initialize Pod</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const modal = document.getElementById("podModal");
-        const openBtn = document.getElementById("openPodModal");
-        const closeBtn = document.getElementById("closePodModal");
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("podModal");
+            const openBtn = document.getElementById("openPodModal");
+            const closeBtn = document.getElementById("closePodModal");
 
-        // Check if the elements exist on the page before adding listeners
-        if (openBtn && modal && closeBtn) {
-            openBtn.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevents page jump
-                modal.style.display = "flex";
-            });
+            if (openBtn && modal && closeBtn) {
+                openBtn.addEventListener("click", function(event) {
+                    event.preventDefault(); 
+                    modal.style.display = "flex";
+                });
 
-            closeBtn.addEventListener("click", function() {
-                modal.style.display = "none";
-            });
-
-            // Close modal if user clicks the dark background overlay
-            window.addEventListener("click", function(event) {
-                if (event.target === modal) {
+                closeBtn.addEventListener("click", function() {
                     modal.style.display = "none";
-                }
-            });
-        } else {
-            console.error("Modal elements not found. Check your HTML IDs.");
-        }
-    });
-</script>
+                });
+
+                window.addEventListener("click", function(event) {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            } else {
+                console.error("Modal elements not found. Check your HTML IDs.");
+            }
+        });
+    </script>
 </body>
 </html>

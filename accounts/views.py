@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 from pods.models import Pod
+from marketplace.models import Pitch
+from django.db.models import Q
 
 def role_required(allowed_role):
     def decorator(view_func):
@@ -85,15 +87,25 @@ def login_view(request):
 @login_required(login_url='login')
 @role_required('client')
 def client(request):
-    return render(request, 'client.html')
+    sent_pitches = Pitch.objects.filter(client=request.user).order_by('-created_at')
+    
+    context = {
+        'sent_pitches': sent_pitches
+    }
+    return render(request, 'client.html', context)
 
 @login_required(login_url='login')
 @role_required('freelancer')
 def freelancer(request):
     my_pods = request.user.joined_pods.all()
 
+    incoming_pitches = Pitch.objects.filter(
+        Q(freelancer=request.user) | Q(pod__in=my_pods)
+    ).order_by('-created_at').distinct()
+    
     context = {
-        'my_pods': my_pods
+        'my_pods': my_pods,
+        'incoming_pitches': incoming_pitches
     }
     return render(request, 'freelancer.html', context)
 
