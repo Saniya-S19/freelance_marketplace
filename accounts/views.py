@@ -136,3 +136,5 @@ def find_freelancers(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+    

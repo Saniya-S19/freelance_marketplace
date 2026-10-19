@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -40,3 +40,25 @@ def create_pitch(request):
         return redirect('find_freelancers')
         
     return redirect('find_freelancers')
+
+@login_required(login_url='login')
+def update_pitch_status(request, pitch_id):
+    if request.method == 'POST':
+        pitch = get_object_or_404(Pitch, id=pitch_id)
+        new_status = request.POST.get('status') # Will be 'accepted' or 'declined'
+        
+        # Security: Verify the user has permission to answer this pitch
+        is_authorized = False
+        if pitch.freelancer == request.user:
+            is_authorized = True
+        elif pitch.pod and request.user in pitch.pod.members.all():
+            is_authorized = True
+            
+        if is_authorized and new_status in ['accepted', 'declined']:
+            pitch.status = new_status
+            pitch.save()
+            messages.success(request, f"You have {new_status} the pitch: '{pitch.project_title}'")
+        else:
+            messages.error(request, "You are not authorized to update this pitch.")
+            
+    return redirect('freelancer')

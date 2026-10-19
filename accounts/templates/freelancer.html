@@ -330,7 +330,7 @@
                         <span class="status-{{ pitch.status }}" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">
                             {{ pitch.status }}
                         </span>
-                        <button class="btn-action" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Review Pitch</button>
+                        <button class="btn-action open-review-modal" data-pitch-id="{{ pitch.id }}" data-pitch-title="{{ pitch.project_title }}"style="padding: 0.4rem 1rem; font-size: 0.85rem;">Review Pitch</button>
                     </div>
                 </div>
                 {% endfor %}
@@ -365,30 +365,80 @@
         </div>
     </div>
 
+    <div id="reviewModal" class="modal-overlay">
+    <div class="modal-content" style="text-align: center;">
+        <button id="closeReviewModal" class="close-btn">&times;</button>
+        <h2 class="modal-header" style="margin-bottom: 0.5rem;">Review Project Offer</h2>
+        <p id="reviewPitchTitle" style="color: var(--text-muted); margin-bottom: 2rem; font-weight: 600;"></p>
+        
+        <!-- The action URL will be injected dynamically by JavaScript -->
+        <form id="reviewForm" method="POST" action="">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <!-- Accept Button -->
+                <button type="submit" name="status" value="accepted" style="background-color: #2E8B57; color: white; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1;">
+                    Accept Pitch
+                </button>
+                
+                <!-- Decline Button -->
+                <button type="submit" name="status" value="declined" style="background-color: #DC143C; color: white; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1;">
+                    Decline
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const modal = document.getElementById("podModal");
-            const openBtn = document.getElementById("openPodModal");
-            const closeBtn = document.getElementById("closePodModal");
+            
+            const podModal = document.getElementById("podModal");
+            const openPodBtn = document.getElementById("openPodModal");
+            const closePodBtn = document.getElementById("closePodModal");
 
-            if (openBtn && modal && closeBtn) {
-                openBtn.addEventListener("click", function(event) {
+            if (openPodBtn && podModal && closePodBtn) {
+                openPodBtn.addEventListener("click", function(event) {
                     event.preventDefault(); 
-                    modal.style.display = "flex";
+                    podModal.style.display = "flex";
                 });
 
-                closeBtn.addEventListener("click", function() {
-                    modal.style.display = "none";
+                closePodBtn.addEventListener("click", function() {
+                    podModal.style.display = "none";
                 });
-
-                window.addEventListener("click", function(event) {
-                    if (event.target === modal) {
-                        modal.style.display = "none";
-                    }
-                });
-            } else {
-                console.error("Modal elements not found. Check your HTML IDs.");
             }
+
+            // --- REVIEW PITCH MODAL LOGIC ---
+            const reviewModal = document.getElementById("reviewModal");
+            const closeReviewBtn = document.getElementById("closeReviewModal");
+            const reviewButtons = document.querySelectorAll(".open-review-modal");
+            const reviewForm = document.getElementById("reviewForm");
+            const reviewTitleDisplay = document.getElementById("reviewPitchTitle");
+
+            if (reviewButtons && reviewModal && closeReviewBtn) {
+                reviewButtons.forEach(button => {
+                    button.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        
+                        const pitchId = this.getAttribute("data-pitch-id");
+                        const pitchTitle = this.getAttribute("data-pitch-title");
+                        
+                        // Dynamically build the URL pattern
+                        reviewForm.action = `/pitch/${pitchId}/update/`;
+                        reviewTitleDisplay.textContent = `"${pitchTitle}"`;
+                        
+                        reviewModal.style.display = "flex";
+                    });
+                });
+
+                closeReviewBtn.addEventListener("click", () => reviewModal.style.display = "none");
+            }
+
+            // --- GLOBAL OVERLAY CLICK TO CLOSE ---
+            window.addEventListener("click", function(event) {
+                if (event.target === podModal) podModal.style.display = "none";
+                if (event.target === reviewModal) reviewModal.style.display = "none";
+            });
+
         });
     </script>
 </body>
