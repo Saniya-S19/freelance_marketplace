@@ -1,35 +1,33 @@
 from django.shortcuts import render, redirect
-from . models import ClientProfile
-from . form import ClientProfileForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+# Import the Profile model from your accounts app
+from accounts.models import Profile
 
-def freelance_profile (request):
-    return render(request, "freelancer_profile.html")
-
-def client_profile (request):
-    profile = ClientProfile.objects.filter(user=request.user).first()
-
-    return render(request, "client_profile.html", {"profile":profile})
-
-def edit_profile (request):
-    profile = ClientProfile.objects.filter(user=request.user).first()
-    if profile is None:
-        profile = ClientProfile(user=request.user)
-
-    if request.method == "POST":
-        form = ClientProfileForm(
-            request.POST,
-            request.FILES,
-            instance=profile
-        )
-
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = request.user
-            profile.save()
-
-            return redirect("client_profile")
+@login_required(login_url='login')
+def my_profile(request):
+    user_profile = request.user.profile
+    
+    if request.method == 'POST':
+        # Update basic user info
+        request.user.first_name = request.POST.get('first_name', '')
+        request.user.last_name = request.POST.get('last_name', '')
+        request.user.email = request.POST.get('email', '')
+        request.user.save()
         
-    else:
-        form = ClientProfileForm(instance=profile)
+        # Update profile specific fields
+        user_profile.title = request.POST.get('title', '')
+        
+        # Only update skills if they are a freelancer
+        if user_profile.role == 'freelancer':
+            user_profile.skills = request.POST.get('skills', '')
+            
+        user_profile.save()
+        messages.success(request, "Your profile has been successfully updated!")
+        
+        # Redirect back to the appropriate dashboard
+        if user_profile.role == 'client':
+            return redirect('client')
+        return redirect('freelancer')
 
-    return render(request, "edit_profile.html",{"form":form})
+    return render(request, 'profile.html', {'profile': user_profile})
