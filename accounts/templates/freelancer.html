@@ -236,8 +236,9 @@
     <aside class="sidebar">
         <a href="{% url 'home' %}" class="logo">PitchPod</a>
         <nav class="nav-links">
-            <a href="#" class="nav-item active">Dashboard</a>
+            <a href="{% url 'freelancer' %}" class="nav-item active">Dashboard</a>
             <a href="#" class="nav-item">My Pods</a>
+            <a href="{% url 'my_profile' %}" class="nav-item">My Profile</a>
             <a href="#" class="nav-item">Messages</a>
             <a href="{% url 'logout' %}" class="nav-item" style="margin-top: auto; color: var(--brand-burgundy);">Logout</a>
         </nav>

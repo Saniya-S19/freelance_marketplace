@@ -22,3 +22,18 @@ class Pod(models.Model):
     
     def __str__(self):
         return self.name
+
+class PodInvitation(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('declined', 'Declined'),
+    )
+    
+    pod = models.ForeignKey(Pod, on_delete=models.CASCADE, related_name='invitations')
+    freelancer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pod_invitations')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Invite to {self.freelancer.username} for {self.pod.name}"

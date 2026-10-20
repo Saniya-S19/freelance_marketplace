@@ -304,12 +304,12 @@
         </div>
 
         <nav class="nav-menu">
-            <a href="#" class="nav-item active">Dashboard</a>
+            <a href="{%url 'client' %}" class="nav-item active">Dashboard</a>
             <a href="{% url 'find_freelancers'%}?view=solo" class="nav-item">Discover Talent</a>
-            <a href="" class="nav-item">Sent Pitches (2)</a>
+            <a href="#" class="nav-item">Sent Pitches (2)</a>
             <a href="#" class="nav-item">Active Projects</a>
             <a href="#" class="nav-item">Billing & Escrow</a>
-            <a href="#" class="nav-item">Company Profile</a>
+            <a href="{% url 'my_profile' %}" class="nav-item">Company Profile</a>
         </nav>
 
         <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
